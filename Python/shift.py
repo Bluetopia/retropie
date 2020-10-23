@@ -1,6 +1,30 @@
+'''
+    shift.py - Script to control LED buttons connected via 74HCT595 shift registers
+
+    Usage:
+        shift.py <system> <ROM path>
+
+    Configuration Instructions:
+        - create "runcommand-onstart.sh" script at /opt/retropie/configs/all
+        - Add command calling this script:
+            python <path/to/shift.py> "$1" "$3"
+
+        - optionally, create a similar "runcommand-onend.sh" script to revert buttons
+          when an emulator is closed
+
+    Command line parameters provided by emulation station
+        - $1 - system (atari2600, nes, etc)
+        - $2 - emulator being called (lr-stella, lr-picodrive, etc)
+        - $3 - full path to ROM file
+        - $4 - full command line to launch emulator
+
+'''
+
 import RPi.GPIO as GPIO
 import time
 import sys
+from emulators import emulators
+from roms import roms
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -23,45 +47,28 @@ def shiftout(byte):
 		GPIO.output(PIN_CLOCK, 0)
 	GPIO.output(PIN_LATCH, 1)
 
+p1 = None
+p2 = None
 
-'''
-    Player 1 (values turn OFF light):
+if len(sys.argv) >= 2:
+    if sys.argv[1] is None or sys.argv[1] not in emulators:
+        exit(1)
 
-        (128)   (64)
+    p1 = emulators[sys.argv[1]][0]
+    p2 = emulators[sys.argv[1]][1]
 
-            (4)
-    (1)     (8)     (16)
-    (2)             (32)
-
-    Player 2 (values turn OFF light)
-
-        (128)   (64)
-        
-            (4)
-    (16)    (8)     (1)
-    (32)            (2)
-
-'''
-'''
-[
-    "2600" : (,)
-    "NES" : (23, 53),   # A, B, Select, Start
-    "SMS" : (23, 53),   # A, B, Select, Start
-    "GB": (23, 53),     # A, B, Select, Start
-    "GBA": (5, 20),     # A, B, L, R, Select, Start
-    "GG": (151, 181),   # A, B, Start
-    "SNES" : (0, 0)     # A, B, X, Y, L, R, Select, Start
-]
-'''
+if len(sys.argv) == 3:
+    rom = sys.argv[2].split("/")[-1]
+    print(rom)
+    if rom in roms:
+        p1 = roms[rom][0]
+        p2 = roms[rom][1]
 
 GPIO.output(PIN_OE, 0)
 
-x = int(sys.argv[1])
-y = int(sys.argv[2])
+if p2 is not None:
+    shiftout(p2)
 
-if x is not None:
-    shiftout(x)
-
-if y is not None:
-    shiftout(y)
+if p1 is not None:
+    shiftout(p1)
 
