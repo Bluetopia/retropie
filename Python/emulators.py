@@ -1,37 +1,39 @@
 '''
     emulators.py - Default button light configurations for emulators.
 
-    Player 1 (values turn OFF light because I don't feel like re-wiring all the buttons):
+    Player 1:
 
         (128)   (64)
 
-            (4)
-    (1)     (8)     (16)
-    (2)             (32)
+            (16)
+    (32)     (2)     (8)
+    (4)              (1)
 
-    Player 2 (values turn OFF light, same as above)
+    Player 2:
 
         (128)   (64)
-        
-            (4)
-    (16)    (8)     (1)
-    (32)            (2)
+
+            (16)
+    (32)     (2)     (8)
+    (4)              (1)
 
 '''
 
 emulators = {
-    "atari2600" : (247, 247),   # Fire
-    "nes" : (23, 53),           # A, B, Select, Start
-    "mastersystem" : (23, 53),  # A, B, Select, Start
-    "gb": (23, 53),             # A, B, Select, Start
-    "gba": (5, 20),             # A, B, L, R, Select, Start
-    "gamegear": (151, 181),     # A, B, Start
-    "megadrive": (149, 149),    # A, B, C, Start
-    "neogeo": (40, 10),         # A, B, C, D, Coin, Start
-    "pcengine": (151, 181),     # A, B, Select, Start
-    "snes" : (0, 0),            # A, B, X, Y, L, R, Select, Start
-    "psx" : (0, 0),             # Square, X, Circle, Triangle, L, R
-    "emulationstation" : (3, 48)
+    "atari2600" : (194, 194),        # Fire
+    "atarilynx" : (118, 118),        # A, B, Start, L, R
+    "nes" : (195, 195),              # A, B, Select, Start
+    "mastersystem" : (3, 3),         # A, B
+    "gb": (195, 195),                # A, B, Select, Start
+    "gbc": (195, 195),               # A, B, Select, Start
+#    "gba": (5, 20),             # A, B, L, R, Select, Start
+    "gamegear": (67, 67),            # A, B, Start
+    "megadrive": (71, 71),           # A, B, C, Start
+#    "neogeo": (40, 10),         # A, B, C, D, Coin, Start
+    "pcengine": (195, 195),          # A, B, Select, Start
+    "snes" : (255, 255),             # A, B, X, Y, L, R, Select, Start
+#    "psx" : (0, 0),             # Square, X, Circle, Triangle, L, R
+    "emulationstation" : (219, 219)  # X, Y, A, B, Select, Start
 }
 
 
